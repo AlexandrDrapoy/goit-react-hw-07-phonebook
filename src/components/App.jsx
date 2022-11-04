@@ -1,8 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filters';
+import { ContactList } from './ContactList/ContactList';
 // import { number } from 'prop-types';
 export class App extends Component {
   state = {
@@ -14,6 +15,13 @@ export class App extends Component {
     ],
 
     filter: '',
+  };
+
+  filterContacts = e => {
+    const { value } = e.target;
+    this.setState({
+      filter: value.toLowerCase(),
+    });
   };
   onSubmitForm = ({ name, number }) => {
     this.setState({
@@ -28,51 +36,24 @@ export class App extends Component {
     });
   };
 
-  listToRender = () => {
-    console.log(this.state.contacts);
-    if (!this.state.filter) {
-      return this.state.contacts;
-    }
-    return this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter)
-    );
-  };
-
-  renderContacts = () => {
-    const contactsList = this.listToRender();
-
-    return (
-      <>
-        <ul>
-          {contactsList.map(({ id, name, number }) => (
-            <li key={id}>
-              <span>{name}</span>
-              <span>{number}</span>
-            </li>
-          ))}
-        </ul>
-      </>
-    );
-  };
-
   render() {
-    const { filter } = this.state;
+    // const { filter } = this.state;
     // console.log(<ContactForm />);
     return (
       <div>
-        {/* // <h1>Phonebook</h1>
-  //<ContactForm ... /> 
-
-  // <h2>Contacts</h2>
-  // <Filter ... />
-  // <ContactList ... />  */}
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.onSubmitForm} />
         <div>
           <h2>Contacts</h2>
-          <Filter />
+          <Filter
+            filter={this.state.filter}
+            onChangeValue={this.filterContacts}
+          />
 
-          {this.renderContacts()}
+          <ContactList
+            contacts={this.state.contacts}
+            filter={this.state.filter}
+          />
         </div>
       </div>
     );
