@@ -1,6 +1,8 @@
 import { Component } from 'react';
-import { ContactForm } from 'components/ContactForm/ContactForm';
+
 import { nanoid } from 'nanoid';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filters';
 // import { number } from 'prop-types';
 export class App extends Component {
   state = {
@@ -23,12 +25,6 @@ export class App extends Component {
           number: number.value,
         },
       ],
-    });
-  };
-  filterContacts = e => {
-    const { value } = e.target;
-    this.setState({
-      filter: value.toLowerCase(),
     });
   };
 
@@ -61,7 +57,7 @@ export class App extends Component {
 
   render() {
     const { filter } = this.state;
-    console.log(<ContactForm />);
+    // console.log(<ContactForm />);
     return (
       <div>
         {/* // <h1>Phonebook</h1>
@@ -74,15 +70,8 @@ export class App extends Component {
         <ContactForm onSubmit={this.onSubmitForm} />
         <div>
           <h2>Contacts</h2>
-          {/* // <Filter ... />
-  // <ContactList ... />  */}
-          <p>Find Contact</p>
-          <input
-            type="text"
-            name="filter"
-            value={filter}
-            onChange={this.filterContacts}
-          ></input>
+          <Filter />
+
           {this.renderContacts()}
         </div>
       </div>
