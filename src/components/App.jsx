@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filters';
+import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactList/ContactList';
-// import { number } from 'prop-types';
+import { AppContainer } from './App.styled';
+
 export class App extends Component {
   state = {
     contacts: [
@@ -24,23 +25,30 @@ export class App extends Component {
     });
   };
   onSubmitForm = ({ name, number }) => {
+    if (this.state.contacts.find(el => el.name === name)) {
+      alert(`${name} is alredy in contacts`);
+      return;
+    }
     this.setState({
       contacts: [
         ...this.state.contacts,
         {
           id: nanoid(),
-          name: name.value,
-          number: number.value,
+          name: name,
+          number: number,
         },
       ],
     });
   };
 
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
   render() {
-    // const { filter } = this.state;
-    // console.log(<ContactForm />);
     return (
-      <div>
+      <AppContainer>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.onSubmitForm} />
         <div>
@@ -53,9 +61,21 @@ export class App extends Component {
           <ContactList
             contacts={this.state.contacts}
             filter={this.state.filter}
+            onDeleteContact={this.deleteContact}
           />
         </div>
-      </div>
+      </AppContainer>
     );
   }
 }
+
+App.propTypes = {
+  onSubmit: PropTypes.func,
+  filter: PropTypes.string,
+  contacts: PropTypes.shape({
+    id: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    deleteContact: PropTypes.func,
+  }),
+};

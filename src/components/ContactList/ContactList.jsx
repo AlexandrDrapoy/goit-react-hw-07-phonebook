@@ -1,3 +1,5 @@
+import { Contact } from 'components/Contact/Contact.jsx';
+import { List } from './ContactList.styled';
 const listToRender = (filter, contacts) => {
   if (!filter) {
     return contacts;
@@ -7,19 +9,22 @@ const listToRender = (filter, contacts) => {
   );
 };
 
-export const ContactList = (contact, filter) => {
-  const contactsList = listToRender(filter, contact);
+export const ContactList = ({ contacts, filter, onDeleteContact }) => {
+  const contactsList = listToRender(filter, contacts);
 
   return (
     <>
-      <ul>
-        {contactsList.map(({ id, name, number }) => (
-          <li key={id}>
-            <span>{name}</span>
-            <span>{number}</span>
-          </li>
-        ))}
-      </ul>
+      <List>
+        {contactsList.map(contactItem => {
+          return (
+            <Contact
+              key={contactItem.id}
+              contactItem={contactItem}
+              onDeleteContact={onDeleteContact}
+            />
+          );
+        })}
+      </List>
     </>
   );
 };
