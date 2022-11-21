@@ -7,7 +7,7 @@ export const FormWrapper = styled.form`
   width: 50%;
 `;
 
-export const FormLabel = styled.form`
+export const FormLabel = styled.label`
   display: flex;
   flex-direction: column;
 `;

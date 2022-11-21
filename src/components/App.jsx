@@ -29,17 +29,29 @@ export class App extends Component {
       alert(`${name} is alredy in contacts`);
       return;
     }
-    this.setState({
+    this.setState(prevState => ({
       contacts: [
-        ...this.state.contacts,
+        ...prevState.contacts,
         {
           id: nanoid(),
           name: name,
           number: number,
         },
       ],
-    });
+    }));
   };
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentDidMount() {
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
 
   deleteContact = contactId => {
     this.setState(prevState => ({
@@ -50,20 +62,22 @@ export class App extends Component {
     return (
       <AppContainer>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.onSubmitForm} />
-        <div>
-          <h2>Contacts</h2>
-          <Filter
-            filter={this.state.filter}
-            onChangeValue={this.filterContacts}
-          />
+        <ContactForm onSubmit={this.onSubmitForm}></ContactForm>
+        {this.state.contacts.length > 0 && (
+          <div>
+            <h2>Contacts</h2>
+            <Filter
+              filter={this.state.filter}
+              onChangeValue={this.filterContacts}
+            />
 
-          <ContactList
-            contacts={this.state.contacts}
-            filter={this.state.filter}
-            onDeleteContact={this.deleteContact}
-          />
-        </div>
+            <ContactList
+              contacts={this.state.contacts}
+              filter={this.state.filter}
+              onDeleteContact={this.deleteContact}
+            />
+          </div>
+        )}
       </AppContainer>
     );
   }
