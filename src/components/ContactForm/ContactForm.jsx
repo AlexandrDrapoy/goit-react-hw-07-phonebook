@@ -2,16 +2,12 @@ import { FormButtonSubmit, FormLabel, FormWrapper } from './ContactForm.styled';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 export const ContactForm = ({ onSubmit }) => {
-  // state = {
-  //   name: '',
-  //   number: '',
-  // };
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleChange = e => {
-    const { fild, value } = e.target;
+    const { name, value } = e.target;
 
-    switch (fild) {
+    switch (name) {
       case 'name':
         setName(value);
         break;
@@ -22,10 +18,6 @@ export const ContactForm = ({ onSubmit }) => {
       default:
         break;
     }
-
-    // this.setState({
-    //   [name]: value,
-    // });
   };
 
   const handleSubmit = e => {
