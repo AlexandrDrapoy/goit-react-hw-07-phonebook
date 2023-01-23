@@ -1,28 +1,30 @@
 import { Contact } from 'components/Contact/Contact.jsx';
+import { useSelector } from 'react-redux';
+import { getContacts, getValueFilter } from 'redux/selectors';
 import { List } from './ContactList.styled';
-const listToRender = (filter, contacts) => {
-  if (!filter) {
+const getVisibleContacts = (contacts, filterValue) => {
+  if (!filterValue) {
     return contacts;
   }
   return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter)
+    contact.name.toLowerCase().includes(filterValue)
   );
 };
 
-export const ContactList = ({ contacts, filter, onDeleteContact }) => {
-  const contactsList = listToRender(filter, contacts);
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filterValue = useSelector(getValueFilter);
+  console.log('contacts---', contacts);
+  console.log('filterValue---', filterValue);
+
+  console.log(contacts);
+  const visibleContacts = getVisibleContacts(contacts, filterValue);
 
   return (
     <>
       <List>
-        {contactsList.map(contactItem => {
-          return (
-            <Contact
-              key={contactItem.id}
-              contactItem={contactItem}
-              onDeleteContact={onDeleteContact}
-            />
-          );
+        {visibleContacts.map(contact => {
+          return <Contact key={contact.id} contact={contact} />;
         })}
       </List>
     </>

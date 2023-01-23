@@ -1,11 +1,25 @@
-export const Filter = ({ filter, onChangeValue }) => (
-  <>
-    <p>Find Contact</p>
-    <input
-      type="text"
-      name="filter"
-      value={filter}
-      onChange={onChangeValue}
-    ></input>
-  </>
-);
+import { useDispatch, useSelector } from 'react-redux';
+import { setValueFilter } from 'redux/filterSlice';
+import { getValueFilter } from 'redux/selectors';
+
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getValueFilter);
+
+  const onChangeValue = e => {
+    console.log('evt_filter', e);
+    dispatch(setValueFilter(e.target.value));
+  };
+
+  return (
+    <>
+      <p>Find Contact</p>
+      <input
+        type="text"
+        name="filter"
+        value={filter}
+        onChange={onChangeValue}
+      ></input>
+    </>
+  );
+};
