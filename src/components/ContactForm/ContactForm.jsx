@@ -9,7 +9,7 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
 
   const contacts = useSelector(getContacts);
-
+  console.log(contacts);
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.target;

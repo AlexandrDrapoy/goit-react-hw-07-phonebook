@@ -25,6 +25,7 @@ export const App = () => {
   // const filterContacts = e => setFilter(e.target.value.toLowerCase());
 
   const contacts = useSelector(getContacts);
+  console.log('app-----', contacts);
   // useEffect(() => {
   //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
   //   console.log(parsedContacts);

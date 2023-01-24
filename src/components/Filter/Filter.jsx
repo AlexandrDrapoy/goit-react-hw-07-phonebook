@@ -7,7 +7,6 @@ export const Filter = () => {
   const filter = useSelector(getValueFilter);
 
   const onChangeValue = e => {
-    console.log('evt_filter', e);
     dispatch(setValueFilter(e.target.value));
   };
 
