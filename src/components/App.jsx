@@ -7,25 +7,10 @@ import { ContactList } from './ContactList/ContactList';
 import { AppContainer } from './App.styled';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-// import { useRef } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { addContact } from 'redux/contactsSlice';
 
 export const App = () => {
-  // const [contacts, setContacts] = useState([]);
-  // const [filter, setFilter] = useState('');
-  // const dispatch = useDispatch();
-  // const isFirstRender = useRef(true);
-
-  // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-
-  // const filterContacts = e => setFilter(e.target.value.toLowerCase());
-
   const contacts = useSelector(getContacts);
-  console.log('app-----', contacts);
+
   // useEffect(() => {
   //   const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
   //   console.log(parsedContacts);
